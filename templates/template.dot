@@ -1,0 +1,30 @@
+digraph {{name}} {
+
+  graph [
+    rankdir = "LR"
+  ];
+
+  {{#with properties}}
+  // sources
+  {{#each sources}}
+  {{name}} [shape=cds]
+  {{/each}}
+
+  // processors
+  {{#each processors}}
+  {{name}} [shape=box]
+    {{#each inputs}}
+  {{moduleName}} -> {{../name}}
+    {{/each}}
+  {{/each}}
+
+   // sinks
+  {{#each sinks}}
+  {{name}} [shape=cylinder]
+    {{#each inputs}}
+  {{moduleName}} -> {{../name}}
+    {{/each}}
+  {{/each}}
+
+  {{/with}}
+}

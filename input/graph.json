@@ -1,0 +1,57 @@
+{
+  "@apiVersion": "1.0",
+  "name": "RecordOnSignal",
+  "properties": {
+    "description": "Record on signal",
+    "sources": [
+      {
+        "@odata.type": "#Microsoft.Media.MediaGraphRtspSource",
+        "name": "rtspSource",
+        "endpoint": {
+          "@odata.type": "#Microsoft.Media.MediaGraphClearEndpoint",
+          "url": "rtsp://rtspsim:554/media/camera-300s.mkv",
+          "credentials": {
+            "@odata.type": "#Microsoft.Media.MediaGraphUsernamePasswordCredentials",
+            "username": "test",
+            "password": "test"
+          }
+        }
+      },
+      {
+        "@odata.type": "#Microsoft.Media.MediaGraphIoTHubMessageSource",
+        "name": "iotMessageSource",
+        "hubInputName": "temperature"
+      }
+    ],
+    "processors": [
+      {
+        "@odata.type": "#Microsoft.Media.MediaGraphSignalGateProcessor",
+        "name": "signalGateProcessor",
+        "inputs": [
+          {
+            "moduleName": "iotMessageSource"
+          },
+          {
+            "moduleName": "rtspSource"
+          }
+        ],
+        "activationEvaluationWindow": "PT1S",
+        "activationSignalOffset": "PT0S",
+        "minimumActivationTime": "PT5S",
+        "maximumActivationTime": "PT5S"
+      }
+    ],
+    "sinks": [
+      {
+        "@odata.type": "#Microsoft.Media.MediaGraphFileSink",
+        "name": "filesink",
+        "inputs": [
+          {
+            "moduleName": "signalGateProcessor"
+          }
+        ],
+        "filePathPattern": "/var/media/video-${System.DateTime}.mp4"
+      }
+    ]
+  }
+}
