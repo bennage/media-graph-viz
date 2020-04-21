@@ -7,7 +7,7 @@
 
 ## usage
 - Open the project in Code
-- It should prompt you to reopen in a container ([more info](https://code.visualstudio.com/docs/remote/containers#_quick-start-try-a-dev-container)
+- It should prompt you to reopen in a container ([more info](https://code.visualstudio.com/docs/remote/containers#_quick-start-try-a-dev-container))
 - in the terminal in Code:
   - `npm i` to install the dependencies
   - `node index.js` to run
